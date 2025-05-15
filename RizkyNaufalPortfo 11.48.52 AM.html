@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rizky Naufal Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        .hover-tilt:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+        #about {
+            scroll-margin-top: 64px; /* Sesuaikan dengan tinggi navbar */
+        }
+        /* Tambahkan CSS untuk hamburger menu */
+        .mobile-menu {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none;
+            }
+            .mobile-menu {
+                display: block;
+            }
+            #mobile-menu {
+                display: none;
+            }
+            #mobile-menu.open {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+ 
+    <!-- Navbar -->
+    <nav class="bg-gray-800 py-4 fixed w-full z-10">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <div class="text-2xl font-bold">Naufal Portfolio</div>
+            <!-- Desktop Menu -->
+            <ul class="desktop-menu flex space-x-6">
+                <li><a href="#about" class="hover:text-indigo-500 transition">About Me</a></li>
+                <li><a href="#portfolio" class="hover:text-indigo-500 transition">My Projects</a></li>
+                <li><a href="#contact" class="hover:text-indigo-500 transition">Contact</a></li>
+            </ul>
+            <!-- Hamburger Button -->
+            <button id="hamburger-button" class="mobile-menu text-2xl focus:outline-none">
+                <span class="sr-only">Open menu</span>
+                &#9776;
+            </button>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu absolute top-16 right-0 bg-gray-800 w-full text-center">
+                <ul class="flex flex-col space-y-4 py-4">
+                    <li><a href="#about" class="hover:text-indigo-500 transition">About Me</a></li>
+                    <li><a href="#portfolio" class="hover:text-indigo-500 transition">My Projects</a></li>
+                    <li><a href="#contact" class="hover:text-indigo-500 transition">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+ 
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-purple-600 to-blue-500 text-center h-screen flex flex-col justify-center items-center">
+        <img src="WhatsApp Image 2024-08-27 at 17.16.20.jpeg" alt="Profile Photo" class="w-32 h-32 rounded-full object-cover mb-6 border-4 border-white mt-6">
+        <h1 class="text-6xl font-extrabold">Whats Up, I'm Naufal</h1>
+        <p class="mt-4 text-2xl">A Fullstack Developer</p>
+        <a href="#portfolio" class="mt-10 inline-block px-10 py-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-300">Turn to Explore My Experience</a>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900 opacity-80 pointer-events-none"></div>
+    </section>
+ 
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-extrabold">About Me</h2>
+            <p class="mt-6 text-lg text-gray-400">I'm Naufal, a Full Stack and Mobile Developer with a passion for building robust and scalable applications. As a student at Politeknik IDN, I have honed my skills in both web and mobile development, focusing on delivering seamless user experiences. Currently based in Madinah, I’m committed to continuous learning and contributing to impactful projects.</p>
+            <section class="mt-10">
+                <h2 class="text-center text-2xl font-semibold mb-6">My Skills</h2>
+                <div class="flex justify-center space-x-8">
+                    <img src="https://logowik.com/content/uploads/images/tailwind-css3232.logowik.com.webp" alt="CSS3" class="w-16 h-16">
+                    <img src="https://w7.pngwing.com/pngs/290/579/png-transparent-html-html-logo-html-5-html-five-logo-html-5-logo-programming-langugae-3d-icon-thumbnail.png" alt="html" class="w-16 h-16">
+                    <img src="https://logos-download.com/wp-content/uploads/2019/01/JavaScript_Logo.png" alt="JavaScript" class="w-16 h-16">
+                    <img src="https://logos-download.com/wp-content/uploads/2016/09/PHP_logo.png" alt="PHP" class="w-16 h-16">
+                    <img src="https://logos-download.com/wp-content/uploads/2016/09/Laravel_logo.png" alt="Laravel" class="w-16 h-16">
+                    <img src="https://logos-download.com/wp-content/uploads/2016/10/Python_logo_icon.png" alt="Python" class="w-16 h-16">
+                    <img src="https://e7.pngegg.com/pngimages/10/113/png-clipart-django-web-development-web-framework-python-software-framework-django-text-trademark-thumbnail.png" alt="Python" class="w-16 h-16">
+                    <img src="https://e7.pngegg.com/pngimages/678/747/png-clipart-dart-logo-thumbnail-tech-companies.png" alt="Dart" class="w-16 h-16">
+                    <img src="https://images.seeklogo.com/logo-png/34/1/flutter-logo-png_seeklogo-349577.png" alt="Flutter" class="w-16 h-16">
+                </div>
+            </section>
+            
+        </div>
+    </section>
+ 
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 bg-gray-900">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-extrabold text-center">My Projects</h2>
+            <div class="mt-12 grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden hover-tilt">
+                    <img src="foto bahan 4.jpg" alt="HealtyApp" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold">HealtyApp</h3>
+                        <p class="mt-4 text-gray-400">A fitness progress tracker built with Laravel to help gym members monitor workouts, track progress, and achieve fitness goals.
+
+                            Key Features:
+                            🏋️‍♂️ Workout logging & exercise library
+                            📈 Progress tracking with charts
+                            📅 Session scheduling & reminders
+                            👥 Trainer-client interaction
+                            📱 Mobile-friendly dashboard
+                            
+                            Tech Stack: Laravel, MySQL, Livewire/API, Chart.js</p>
+                    </div>
+                </div>
+                <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden hover-tilt">
+                    <img src="SingaduApp Project.png" alt="Project 2" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold">SingaduApp</h3>
+                        <p class="mt-4 text-gray-400">A digital platform for students to submit and track complaints/issues efficiently. Built with Laravel for robust backend functionality and secure data management.
+
+
+                            Key Features:
+                            📝 Easy complaint submission
+                            📊 Real-time status tracking (Pending/Processed/Resolved)
+                            📱 Responsive web interface
+                            🔐 Secure authentication system
+                            📧 Email notifications
+                            
+                            Tech Stack: Laravel, MySQL, Bootstrap
+                            
+                            Ideal for schools to manage student concerns digitally!</p>
+                    </div>
+                </div>
+                <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden hover-tilt">
+                    <img src="Ticketing_Apps Project.png" alt="Project 3" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold">TicketingApps</h3>
+                        <p class="mt-4 text-gray-400">A mobile ticketing solution for easy support request management. Users can create, track, and get updates on tickets, while admins can assign and resolve issues quickly. Built with Flutter for fast performance and cross-platform compatibility (Android & iOS).
+                            Key Features:
+                            🎟️ Create & track tickets
+                            📊 Real-time status updates
+                            🔔 Push notifications
+                            👨‍💻 Admin management panel
+                            📱 Clean & intuitive UI
+
+                            Tech: Flutter, Firebase, REST API
+
+                            Perfect for businesses needing an efficient support system!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-extrabold">Contact Me</h2>
+            <p class="mt-4 text-lg text-gray-400">Let's create something amazing together. Feel free to reach out to me with your ideas or projects.</p>
+            <form action="#" method="POST" class="mt-8">
+                <div class="grid gap-6 sm:grid-cols-2">
+                    <input type="text" placeholder="Your Name" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-indigo-500 text-white">
+                    <input type="email" placeholder="Your Email" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-indigo-500 text-white">
+                </div>
+                <textarea placeholder="Your Message" class="w-full mt-6 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-indigo-500 text-white"></textarea>
+                <button type="submit" class="mt-6 px-8 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-300">Send Message</button>
+            </form>
+        </div>
+    </section>
+ 
+    <!-- Footer -->
+    <footer class="py-10 bg-gray-900 text-center text-gray-400">
+        <div class="mt-4 space-x-6">
+            <a href="https://www.linkedin.com/in/rizky-naufal-profile" class="hover:text-white">LinkedIn</a>
+            <a href="https://github.com/rzkynaufaal" class="hover:text-white">GitHub</a>
+            <a href="" class="hover:text-white">X</a>
+            <a href="https://www.instagram.com/rzkynaufaal?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="hover:text-white">Instagram</a>
+        </div>
+        <br>
+        <br>
+        <p>&copy; 2024 ELNaufal. All rights reserved.</p>
+    </footer>
+ 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerButton = document.getElementById('hamburger-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            hamburgerButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('open');
+            });
+ 
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    // Close menu when an item is clicked (optional)
+                    if (mobileMenu.classList.contains('open')) {
+                        mobileMenu.classList.remove('open');
+                    }
+                });
+            });
+        });
+    </script>
+ 
+</body>
+</html>
