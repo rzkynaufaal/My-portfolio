@@ -1,216 +1,889 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rizky Naufal Portfolio</title>
+    <title>Rizky Naufal | Fullstack Developer Portfolio</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        html {
-            scroll-behavior: smooth;
+        :root {
+            --primary: #8B5CF6;
+            --primary-dark: #7C3AED;
+            --secondary: #EC4899;
+            --dark: #0F172A;
+            --light: #F1F5F9;
+            --gray: #94A3B8;
         }
-        .hover-tilt:hover {
-            transform: scale(1.05);
-            transition: transform 0.3s ease;
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
         }
-        #about {
-            scroll-margin-top: 64px; /* Sesuaikan dengan tinggi navbar */
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
         }
-        /* Tambahkan CSS untuk hamburger menu */
-        .mobile-menu {
-            display: none;
+        
+        /* Glassmorphism effect */
+        .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        @media (max-width: 768px) {
-            .desktop-menu {
-                display: none;
-            }
-            .mobile-menu {
-                display: block;
-            }
-            #mobile-menu {
-                display: none;
-            }
-            #mobile-menu.open {
-                display: block;
-            }
+        
+        .glass-light {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        
+        /* Custom animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(139, 92, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Custom gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Custom button styles */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.6s ease;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+        }
+        
+        /* Navigation styles */
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Section spacing */
+        section {
+            scroll-margin-top: 6rem;
+            position: relative;
+        }
+        
+        /* Card hover effects */
+        .portfolio-card {
+            transition: all 0.4s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .portfolio-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Skill icon styles */
+        .skill-icon {
+            transition: all 0.3s ease;
+            filter: grayscale(100%);
+            opacity: 0.7;
+        }
+        
+        .skill-icon:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        
+        /* Form styles */
+        .form-input {
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+        }
+        
+        /* Hide scrollbar but allow scrolling */
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        body::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+        
+        body::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--primary), var(--secondary));
+            border-radius: 4px;
+        }
+        
+        /* Particle background */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        /* Mobile menu */
+        .mobile-menu-container {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .mobile-menu-container.open {
+            transform: translateX(0);
+        }
+        
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Typing animation */
+        .typing-animation {
+            overflow: hidden;
+            border-right: 2px solid var(--primary);
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--primary) }
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white">
- 
-    <!-- Navbar -->
-    <nav class="bg-gray-800 py-4 fixed w-full z-10">
-        <div class="container mx-auto flex justify-between items-center px-6">
-            <div class="text-2xl font-bold">Naufal Portfolio</div>
-            <!-- Desktop Menu -->
-            <ul class="desktop-menu flex space-x-6">
-                <li><a href="#about" class="hover:text-indigo-500 transition">About Me</a></li>
-                <li><a href="#portfolio" class="hover:text-indigo-500 transition">My Projects</a></li>
-                <li><a href="#contact" class="hover:text-indigo-500 transition">Contact</a></li>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="glass fixed w-full z-50 py-4 transition-all duration-300 shadow-xl">
+        <div class="container mx-auto flex justify-between items-center px-6 lg:px-8">
+            <a href="#" class="text-2xl font-bold gradient-text">Rizky Naufal</a>
+            
+            <ul class="hidden md:flex space-x-10 font-medium">
+                <li><a href="#about" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">About</a></li>
+                <li><a href="#skills" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">Skills</a></li>
+                <li><a href="#portfolio" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">Projects</a></li>
+                <li><a href="#contact" class="nav-link text-gray-300 hover:text-white transition-colors duration-300">Contact</a></li>
             </ul>
-            <!-- Hamburger Button -->
-            <button id="hamburger-button" class="mobile-menu text-2xl focus:outline-none">
-                <span class="sr-only">Open menu</span>
-                &#9776;
+            
+            <div class="flex items-center space-x-4">
+                <a href="#contact" class="hidden md:block btn-primary px-6 py-2 rounded-full text-sm font-semibold">Hire Me</a>
+                <button id="hamburger-button" class="md:hidden text-2xl text-white focus:outline-none z-50">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu-container md:hidden fixed inset-y-0 right-0 w-64 bg-slate-900 bg-opacity-95 shadow-2xl z-40 p-8">
+            <button id="close-button" class="absolute top-6 right-6 text-2xl text-gray-400 hover:text-white">
+                <i class="fas fa-times"></i>
             </button>
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="mobile-menu absolute top-16 right-0 bg-gray-800 w-full text-center">
-                <ul class="flex flex-col space-y-4 py-4">
-                    <li><a href="#about" class="hover:text-indigo-500 transition">About Me</a></li>
-                    <li><a href="#portfolio" class="hover:text-indigo-500 transition">My Projects</a></li>
-                    <li><a href="#contact" class="hover:text-indigo-500 transition">Contact</a></li>
-                </ul>
+            
+            <ul class="flex flex-col space-y-8 text-xl mt-16">
+                <li><a href="#about" class="nav-link text-white flex items-center"><i class="fas fa-user mr-4 text-purple-400"></i>About</a></li>
+                <li><a href="#skills" class="nav-link text-white flex items-center"><i class="fas fa-code mr-4 text-purple-400"></i>Skills</a></li>
+                <li><a href="#portfolio" class="nav-link text-white flex items-center"><i class="fas fa-briefcase mr-4 text-purple-400"></i>Projects</a></li>
+                <li><a href="#contact" class="nav-link text-white flex items-center"><i class="fas fa-envelope mr-4 text-purple-400"></i>Contact</a></li>
+            </ul>
+            
+            <div class="absolute bottom-10 left-8 right-8">
+                <a href="#contact" class="block w-full btn-primary px-6 py-3 rounded-full text-center font-semibold">Hire Me</a>
+                
+                <div class="flex justify-center space-x-6 mt-8 text-xl">
+                    <a href="https://www.linkedin.com/in/rizky-naufal-profile" target="_blank" class="text-gray-400 hover:text-purple-400 transition-colors">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/rzkynaufaal" target="_blank" class="text-gray-400 hover:text-purple-400 transition-colors">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" target="_blank" class="text-gray-400 hover:text-purple-400 transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.instagram.com/rzkynaufaal" target="_blank" class="text-gray-400 hover:text-purple-400 transition-colors">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
- 
+
     <!-- Hero Section -->
-    <section class="relative bg-gradient-to-r from-purple-600 to-blue-500 text-center h-screen flex flex-col justify-center items-center">
-        <img src="WhatsApp Image 2024-08-27 at 17.16.20.jpeg" alt="Profile Photo" class="w-32 h-32 rounded-full object-cover mb-6 border-4 border-white mt-6">
-        <h1 class="text-6xl font-extrabold">Whats Up, I'm Naufal</h1>
-        <p class="mt-4 text-2xl">A Fullstack Developer</p>
-        <a href="#portfolio" class="mt-10 inline-block px-10 py-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-300">Turn to Explore My Experience</a>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900 opacity-80 pointer-events-none"></div>
-    </section>
- 
-    <!-- About Section -->
-    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl font-extrabold">About Me</h2>
-            <p class="mt-6 text-lg text-gray-400">I'm Naufal, a Full Stack and Mobile Developer with a passion for building robust and scalable applications. As a student at Politeknik IDN, I have honed my skills in both web and mobile development, focusing on delivering seamless user experiences. Currently based in Madinah, I’m committed to continuous learning and contributing to impactful projects.</p>
-            <section class="mt-10">
-                <h2 class="text-center text-2xl font-semibold mb-6">My Skills</h2>
-                <div class="flex justify-center space-x-8">
-                    <img src="https://logowik.com/content/uploads/images/tailwind-css3232.logowik.com.webp" alt="CSS3" class="w-16 h-16">
-                    <img src="https://w7.pngwing.com/pngs/290/579/png-transparent-html-html-logo-html-5-html-five-logo-html-5-logo-programming-langugae-3d-icon-thumbnail.png" alt="html" class="w-16 h-16">
-                    <img src="https://logos-download.com/wp-content/uploads/2019/01/JavaScript_Logo.png" alt="JavaScript" class="w-16 h-16">
-                    <img src="https://logos-download.com/wp-content/uploads/2016/09/PHP_logo.png" alt="PHP" class="w-16 h-16">
-                    <img src="https://logos-download.com/wp-content/uploads/2016/09/Laravel_logo.png" alt="Laravel" class="w-16 h-16">
-                    <img src="https://logos-download.com/wp-content/uploads/2016/10/Python_logo_icon.png" alt="Python" class="w-16 h-16">
-                    <img src="https://e7.pngegg.com/pngimages/10/113/png-clipart-django-web-development-web-framework-python-software-framework-django-text-trademark-thumbnail.png" alt="Python" class="w-16 h-16">
-                    <img src="https://e7.pngegg.com/pngimages/678/747/png-clipart-dart-logo-thumbnail-tech-companies.png" alt="Dart" class="w-16 h-16">
-                    <img src="https://images.seeklogo.com/logo-png/34/1/flutter-logo-png_seeklogo-349577.png" alt="Flutter" class="w-16 h-16">
+    <section class="min-h-screen relative flex items-center justify-center overflow-hidden pt-20">
+        <div id="particles-js" class="absolute inset-0 z-0"></div>
+        
+        <div class="absolute inset-0 z-10 bg-gradient-to-b from-slate-950/70 via-slate-950/50 to-slate-950/80"></div>
+        
+        <div class="container mx-auto px-6 lg:px-8 relative z-20 py-20">
+            <div class="flex flex-col lg:flex-row items-center justify-between">
+                <div class="w-full lg:w-1/2 text-center lg:text-left mb-16 lg:mb-0 fade-in">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                        Fullstack <span class="gradient-text">Developer</span> & <span class="gradient-text">Mobile</span> Expert
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8 max-w-2xl">
+                        I create elegant, innovative digital experiences that push boundaries and deliver exceptional results.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#portfolio" class="btn-primary px-8 py-4 rounded-full font-semibold text-lg pulse-animation">
+                            View My Work
+                        </a>
+                        <a href="#contact" class="glass-light px-8 py-4 rounded-full font-semibold text-lg border border-slate-700 hover:border-purple-400 transition-colors">
+                            Get In Touch
+                        </a>
+                    </div>
                 </div>
-            </section>
-            
+                
+                <div class="w-full lg:w-1/2 flex justify-center fade-in">
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full blur-lg opacity-30"></div>
+                        <img src="WhatsApp Image 2024-08-27 at 17.16.20.jpeg" alt="Rizky Naufal" class="relative w-80 h-80 rounded-full object-cover border-4 border-slate-800 float-animation shadow-2xl">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+            <a href="#about" class="text-gray-400 hover:text-white">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
         </div>
     </section>
- 
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="py-20 bg-gray-900">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-extrabold text-center">My Projects</h2>
-            <div class="mt-12 grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden hover-tilt">
-                    <img src="foto bahan 4.jpg" alt="HealtyApp" class="w-full h-56 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold">HealtyApp</h3>
-                        <p class="mt-4 text-gray-400">A fitness progress tracker built with Laravel to help gym members monitor workouts, track progress, and achieve fitness goals.
 
-                            Key Features:
-                            🏋️‍♂️ Workout logging & exercise library
-                            📈 Progress tracking with charts
-                            📅 Session scheduling & reminders
-                            👥 Trainer-client interaction
-                            📱 Mobile-friendly dashboard
-                            
-                            Tech Stack: Laravel, MySQL, Livewire/API, Chart.js</p>
-                    </div>
-                </div>
-                <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden hover-tilt">
-                    <img src="SingaduApp Project.png" alt="Project 2" class="w-full h-56 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold">SingaduApp</h3>
-                        <p class="mt-4 text-gray-400">A digital platform for students to submit and track complaints/issues efficiently. Built with Laravel for robust backend functionality and secure data management.
-
-
-                            Key Features:
-                            📝 Easy complaint submission
-                            📊 Real-time status tracking (Pending/Processed/Resolved)
-                            📱 Responsive web interface
-                            🔐 Secure authentication system
-                            📧 Email notifications
-                            
-                            Tech Stack: Laravel, MySQL, Bootstrap
-                            
-                            Ideal for schools to manage student concerns digitally!</p>
-                    </div>
-                </div>
-                <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden hover-tilt">
-                    <img src="Ticketing_Apps Project.png" alt="Project 3" class="w-full h-56 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold">TicketingApps</h3>
-                        <p class="mt-4 text-gray-400">A mobile ticketing solution for easy support request management. Users can create, track, and get updates on tickets, while admins can assign and resolve issues quickly. Built with Flutter for fast performance and cross-platform compatibility (Android & iOS).
-                            Key Features:
-                            🎟️ Create & track tickets
-                            📊 Real-time status updates
-                            🔔 Push notifications
-                            👨‍💻 Admin management panel
-                            📱 Clean & intuitive UI
-
-                            Tech: Flutter, Firebase, REST API
-
-                            Perfect for businesses needing an efficient support system!
+    <!-- About Section -->
+    <section id="about" class="py-20 relative">
+        <div class="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-slate-950 to-slate-900"></div>
+        
+        <div class="container mx-auto px-6 lg:px-8 relative z-10">
+            <div class="glass rounded-3xl p-8 md:p-12 lg:p-16 shadow-2xl">
+                <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center"><span class="gradient-text">About Me</span></h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="fade-in">
+                        <p class="text-lg text-gray-300 mb-6 leading-relaxed">
+                            I'm Rizky Naufal, a passionate Full Stack and Mobile Developer with expertise in creating robust, scalable applications. Currently pursuing my studies at Politeknik IDN, I specialize in both web and mobile development with a focus on delivering exceptional user experiences.
                         </p>
+                        <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+                            Based in Jakarta, I'm dedicated to continuous learning and innovation in technology. I believe in writing clean, efficient code and creating solutions that make a real impact.
+                        </p>
+                        
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="flex items-center">
+                                <div class="mr-4 text-purple-400 text-xl">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-400 text-sm">Location</p>
+                                    <p class="text-white">Jakarta, Indonesia</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="mr-4 text-purple-400 text-xl">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-400 text-sm">Education</p>
+                                    <p class="text-white">Politeknik IDN</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="mr-4 text-purple-400 text-xl">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-400 text-sm">Specialization</p>
+                                    <p class="text-white">Fullstack Development</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="mr-4 text-purple-400 text-xl">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-400 text-sm">Languages</p>
+                                    <p class="text-white">PHP, JavaScript, Dart</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="fade-in">
+                        <div class="relative">
+                            <div class="absolute -inset-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl blur-lg opacity-30"></div>
+                            <div class="relative glass-light rounded-2xl p-8 h-full">
+                                <h3 class="text-xl font-semibold mb-6 text-white">My Expertise</h3>
+                                
+                                <div class="space-y-6">
+                                    <div>
+                                        <div class="flex justify-between mb-2">
+                                            <span class="text-gray-300">Web Development</span>
+                                            <span class="text-purple-400">90%</span>
+                                        </div>
+                                        <div class="w-full bg-slate-700 rounded-full h-2.5">
+                                            <div class="bg-gradient-to-r from-purple-600 to-pink-600 h-2.5 rounded-full" style="width: 90%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="flex justify-between mb-2">
+                                            <span class="text-gray-300">Mobile Development</span>
+                                            <span class="text-purple-400">85%</span>
+                                        </div>
+                                        <div class="w-full bg-slate-700 rounded-full h-2.5">
+                                            <div class="bg-gradient-to-r from-purple-600 to-pink-600 h-2.5 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="flex justify-between mb-2">
+                                            <span class="text-gray-300">UI/UX Design</span>
+                                            <span class="text-purple-400">75%</span>
+                                        </div>
+                                        <div class="w-full bg-slate-700 rounded-full h-2.5">
+                                            <div class="bg-gradient-to-r from-purple-600 to-pink-600 h-2.5 rounded-full" style="width: 75%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <div class="flex justify-between mb-2">
+                                            <span class="text-gray-300">DevOps</span>
+                                            <span class="text-purple-400">70%</span>
+                                        </div>
+                                        <div class="w-full bg-slate-700 rounded-full h-2.5">
+                                            <div class="bg-gradient-to-r from-purple-600 to-pink-600 h-2.5 rounded-full" style="width: 70%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
- 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gray-800">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl font-extrabold">Contact Me</h2>
-            <p class="mt-4 text-lg text-gray-400">Let's create something amazing together. Feel free to reach out to me with your ideas or projects.</p>
-            <form action="#" method="POST" class="mt-8">
-                <div class="grid gap-6 sm:grid-cols-2">
-                    <input type="text" placeholder="Your Name" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-indigo-500 text-white">
-                    <input type="email" placeholder="Your Email" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-indigo-500 text-white">
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-slate-900">
+        <div class="container mx-auto px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center"><span class="gradient-text">Technical Skills</span></h2>
+            <p class="text-gray-400 text-center max-w-2xl mx-auto mb-16">I work with a range of technologies to create exceptional digital experiences</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+                <div class="glass-light rounded-2xl p-6 text-center group hover:bg-slate-800 transition-colors fade-in">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <img src="https://logowik.com/content/uploads/images/tailwind-css3232.logowik.com.webp" alt="Tailwind CSS" class="h-12 w-12 object-contain skill-icon">
+                    </div>
+                    <h3 class="text-white font-semibold">Tailwind CSS</h3>
                 </div>
-                <textarea placeholder="Your Message" class="w-full mt-6 px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-indigo-500 text-white"></textarea>
-                <button type="submit" class="mt-6 px-8 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-300">Send Message</button>
-            </form>
+                
+                <div class="glass-light rounded-2xl p-6 text-center group hover:bg-slate-800 transition-colors fade-in">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <img src="https://w7.pngwing.com/pngs/290/579/png-transparent-html-html-logo-html-5-html-five-logo-html-5-logo-programming-langugae-3d-icon-thumbnail.png" alt="HTML5" class="h-12 w-12 object-contain skill-icon">
+                    </div>
+                    <h3 class="text-white font-semibold">HTML5</h3>
+                </div>
+                
+                <div class="glass-light rounded-2xl p-6 text-center group hover:bg-slate-800 transition-colors fade-in">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <img src="https://logos-download.com/wp-content/uploads/2019/01/JavaScript_Logo.png" alt="JavaScript" class="h-12 w-12 object-contain skill-icon">
+                    </div>
+                    <h3 class="text-white font-semibold">JavaScript</h3>
+                </div>
+                
+                <div class="glass-light rounded-2xl p-6 text-center group hover:bg-slate-800 transition-colors fade-in">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <img src="https://logos-download.com/wp-content/uploads/2016/09/PHP_logo.png" alt="PHP" class="h-12 w-12 object-contain skill-icon">
+                    </div>
+                    <h3 class="text-white font-semibold">PHP</h3>
+                </div>
+                
+                <div class="glass-light rounded-2xl p-6 text-center group hover:bg-slate-800 transition-colors fade-in">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <img src="https://logos-download.com/wp-content/uploads/2016/09/Laravel_logo.png" alt="Laravel" class="h-12 w-12 object-contain skill-icon">
+                    </div>
+                    <h3 class="text-white font-semibold">Laravel</h3>
+                </div>
+                
+                <div class="glass-light rounded-2xl p-6 text-center group hover:bg-slate-800 transition-colors fade-in">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <img src="https://logos-download.com/wp-content/uploads/2016/10/Python_logo_icon.png" alt="Python" class="h-12 w-12 object-contain skill-icon">
+                    </div>
+                    <h3 class="text-white font-semibold">Python</h3>
+                </div>
+                
+                <div class="glass-light rounded-2xl p-6 text-center group hover:bg-slate-800 transition-colors fade-in">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <img src="https://e7.pngegg.com/pngimages/10/113/png-clipart-django-web-development-web-framework-python-software-framework-django-text-trademark-thumbnail.png" alt="Django" class="h-12 w-12 object-contain skill-icon">
+                    </div>
+                    <h3 class="text-white font-semibold">Django</h3>
+                </div>
+                
+                <div class="glass-light rounded-2xl p-6 text-center group hover:bg-slate-800 transition-colors fade-in">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <img src="https://e7.pngegg.com/pngimages/678/747/png-clipart-dart-logo-thumbnail-tech-companies.png" alt="Dart" class="h-12 w-12 object-contain skill-icon">
+                    </div>
+                    <h3 class="text-white font-semibold">Dart</h3>
+                </div>
+                
+                <div class="glass-light rounded-2xl p-6 text-center group hover:bg-slate-800 transition-colors fade-in">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <img src="https://images.seeklogo.com/logo-png/34/1/flutter-logo-png_seeklogo-349577.png" alt="Flutter" class="h-12 w-12 object-contain skill-icon">
+                    </div>
+                    <h3 class="text-white font-semibold">Flutter</h3>
+                </div>
+                
+                <div class="glass-light rounded-2xl p-6 text-center group hover:bg-slate-800 transition-colors fade-in">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-database text-4xl text-gray-400 group-hover:text-purple-400 transition-colors"></i>
+                    </div>
+                    <h3 class="text-white font-semibold">MySQL</h3>
+                </div>
+            </div>
         </div>
     </section>
- 
-    <!-- Footer -->
-    <footer class="py-10 bg-gray-900 text-center text-gray-400">
-        <div class="mt-4 space-x-6">
-            <a href="https://www.linkedin.com/in/rizky-naufal-profile" class="hover:text-white">LinkedIn</a>
-            <a href="https://github.com/rzkynaufaal" class="hover:text-white">GitHub</a>
-            <a href="" class="hover:text-white">X</a>
-            <a href="https://www.instagram.com/rzkynaufaal?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="hover:text-white">Instagram</a>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 relative">
+        <div class="absolute top-0 left-0 w-full h-1/2 bg-slate-900"></div>
+        
+        <div class="container mx-auto px-6 lg:px-8 relative z-10">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center"><span class="gradient-text">Featured Projects</span></h2>
+            <p class="text-gray-400 text-center max-w-2xl mx-auto mb-16">A selection of my recent work that showcases my skills and expertise</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="portfolio-card glass-light rounded-2xl overflow-hidden fade-in">
+                    <div class="relative overflow-hidden">
+                        <img src="foto bahan 4.jpg" alt="HealtyApp Dashboard" class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-80"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <h3 class="text-xl font-bold text-white">HealtyApp</h3>
+                            <p class="text-purple-300">Fitness Tracking Platform</p>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <p class="text-gray-300 mb-6">
+                            A comprehensive fitness progress tracker built with Laravel to help gym members monitor workouts, track progress, and achieve fitness goals.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-slate-700 text-gray-300 px-3 py-1 rounded-full text-xs font-medium">Laravel</span>
+                            <span class="bg-slate-700 text-gray-300 px-3 py-1 rounded-full text-xs font-medium">MySQL</span>
+                            <span class="bg-slate-700 text-gray-300 px-3 py-1 rounded-full text-xs font-medium">Livewire</span>
+                            <span class="bg-slate-700 text-gray-300 px-3 py-1 rounded-full text-xs font-medium">Tailwind</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <a href="#" class="text-purple-400 hover:text-white flex items-center transition-colors">
+                                <span class="mr-2">View Project</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            
+                            <div class="flex space-x-4">
+                                <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="portfolio-card glass-light rounded-2xl overflow-hidden fade-in">
+                    <div class="relative overflow-hidden">
+                        <img src="SingaduApp Project.png" alt="SingaduApp Project" class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-80"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <h3 class="text-xl font-bold text-white">SingaduApp</h3>
+                            <p class="text-purple-300">Student Complaint System</p>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <p class="text-gray-300 mb-6">
+                            A digital platform for students to submit and track complaints/issues efficiently with a robust Laravel backend and secure data management.
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-slate-700 text-gray-300 px-3 py-1 rounded-full text-xs font-medium">Laravel</span>
+                            <span class="bg-slate-700 text-gray-300 px-3 py-1 rounded-full text-xs font-medium">MySQL</span>
+                            <span class="bg-slate-700 text-gray-300 px-3 py-1 rounded-full text-xs font-medium">Bootstrap</span>
+                            <span class="bg-slate-700 text-gray-300 px-3 py-1 rounded-full text-xs font-medium">JavaScript</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <a href="#" class="text-purple-400 hover:text-white flex items-center transition-colors">
+                                <span class="mr-2">View Project</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            
+                            <div class="flex space-x-4">
+                                <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="portfolio-card glass-light rounded-2xl overflow-hidden fade-in">
+                    <div class="relative overflow-hidden">
+                        <img src="Ticketing_Apps Project.png" alt="TicketingApps Mobile UI" class="w-full h-56 object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-80"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <h3 class="text-xl font-bold text-white">TicketingApps</h3>
+                            <p class="text-purple-300">Mobile Support System</p>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <p class="text-gray-300 mb-6">
+                            A mobile ticketing solution for easy support request management with Flutter for cross-platform compatibility (Android & iOS).
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-slate-700 text-gray-300 px-3 py-1 rounded-full text-xs font-medium">Flutter</span>
+                            <span class="bg-slate-700 text-gray-300 px-3 py-1 rounded-full text-xs font-medium">Firebase</span>
+                            <span class="bg-slate-700 text-gray-300 px-3 py-1 rounded-full text-xs font-medium">REST API</span>
+                            <span class="bg-slate-700 text-gray-300 px-3 py-1 rounded-full text-xs font-medium">Dart</span>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <a href="#" class="text-purple-400 hover:text-white flex items-center transition-colors">
+                                <span class="mr-2">View Project</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            
+                            <div class="flex space-x-4">
+                                <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-16 fade-in">
+                <a href="#" class="inline-flex items-center px-6 py-3 border border-purple-500 text-purple-400 rounded-full hover:bg-purple-500 hover:text-white transition-colors">
+                    <span>View All Projects</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
         </div>
-        <br>
-        <br>
-        <p>&copy; 2024 ELNaufal. All rights reserved.</p>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-slate-900 relative">
+        <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=%2264%22 height=%2264%22 viewBox=%220 0 64 64%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath d=%22M64 0H0V64h64V0zm-2 2v60H2V2h60z%22 fill=%22%23ffffff%22 fill-opacity=%220.1%22/%3E%3C/svg%3E');"></div>
+        
+        <div class="container mx-auto px-6 lg:px-8 relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center"><span class="gradient-text">Get In Touch</span></h2>
+                <p class="text-gray-400 text-center max-w-2xl mx-auto mb-16">Have a project in mind or want to discuss potential opportunities? I'd love to hear from you.</p>
+                
+                <div class="glass rounded-3xl p-8 md:p-12 shadow-2xl">
+                    <form class="space-y-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <label for="name" class="block text-gray-300 mb-2">Your Name</label>
+                                <input type="text" id="name" class="w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-400 form-input" placeholder="Enter your name">
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-gray-300 mb-2">Your Email</label>
+                                <input type="email" id="email" class="w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-400 form-input" placeholder="Enter your email">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-gray-300 mb-2">Subject</label>
+                            <input type="text" id="subject" class="w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-400 form-input" placeholder="What is this regarding?">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-gray-300 mb-2">Your Message</label>
+                            <textarea id="message" rows="6" class="w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-400 form-input" placeholder="Tell me about your project..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full btn-primary px-8 py-4 rounded-lg font-semibold text-lg">
+                            Send Message
+                        </button>
+                    </form>
+                    
+                    <div class="mt-16 pt-8 border-t border-slate-700">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div class="text-center">
+                                <div class="w-12 h-12 mx-auto mb-4 rounded-full bg-purple-500 bg-opacity-10 flex items-center justify-center">
+                                    <i class="fas fa-map-marker-alt text-purple-400"></i>
+                                </div>
+                                <h3 class="text-white font-semibold mb-2">Location</h3>
+                                <p class="text-gray-400">Jakarta, Indonesia</p>
+                            </div>
+                            
+                            <div class="text-center">
+                                <div class="w-12 h-12 mx-auto mb-4 rounded-full bg-purple-500 bg-opacity-10 flex items-center justify-center">
+                                    <i class="fas fa-envelope text-purple-400"></i>
+                                </div>
+                                <h3 class="text-white font-semibold mb-2">Email</h3>
+                                <p class="text-gray-400">rizky.naufal@example.com</p>
+                            </div>
+                            
+                            <div class="text-center">
+                                <div class="w-12 h-12 mx-auto mb-4 rounded-full bg-purple-500 bg-opacity-10 flex items-center justify-center">
+                                    <i class="fas fa-phone text-purple-400"></i>
+                                </div>
+                                <h3 class="text-white font-semibold mb-2">Phone</h3>
+                                <p class="text-gray-400">+966 123 456 789</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-slate-950 text-center border-t border-slate-800">
+        <div class="container mx-auto px-6 lg:px-8">
+            <a href="#" class="text-2xl font-bold gradient-text inline-block mb-6">Rizky Naufal</a>
+            
+            <ul class="flex justify-center space-x-8 font-medium mb-8">
+                <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+                <li><a href="#skills" class="text-gray-400 hover:text-white transition-colors">Skills</a></li>
+                <li><a href="#portfolio" class="text-gray-400 hover:text-white transition-colors">Projects</a></li>
+                <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+            </ul>
+            
+            <div class="flex justify-center space-x-6 text-xl mb-8">
+                <a href="https://www.linkedin.com/in/rizky-naufal-profile" target="_blank" class="text-gray-400 hover:text-purple-400 transition-colors">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://github.com/rzkynaufaal" target="_blank" class="text-gray-400 hover:text-purple-400 transition-colors">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" target="_blank" class="text-gray-400 hover:text-purple-400 transition-colors">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/rzkynaufaal" target="_blank" class="text-gray-400 hover:text-purple-400 transition-colors">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+            
+            <p class="text-gray-500">&copy; 2024 Rizky Naufal. All rights reserved.</p>
+        </div>
     </footer>
- 
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Initialize particles.js
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 80, density: { enable: true, value_area: 800 } },
+                    color: { value: "#8B5CF6" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.5, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#8B5CF6",
+                        opacity: 0.4,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 2,
+                        direction: "none",
+                        random: true,
+                        out_mode: "out",
+                        bounce: false
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: { enable: true, mode: "grab" },
+                        onclick: { enable: true, mode: "push" },
+                        resize: true
+                    }
+                },
+                retina_detect: true
+            });
+
+            // Mobile menu functionality
             const hamburgerButton = document.getElementById('hamburger-button');
+            const closeButton = document.getElementById('close-button');
             const mobileMenu = document.getElementById('mobile-menu');
             
-            hamburgerButton.addEventListener('click', () => {
+            const toggleMenu = () => {
                 mobileMenu.classList.toggle('open');
+                document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+            };
+            
+            hamburgerButton.addEventListener('click', toggleMenu);
+            closeButton.addEventListener('click', toggleMenu);
+            
+            // Close menu when clicking on links
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', toggleMenu);
             });
- 
-            // Smooth scroll for anchor links
+            
+            // Scroll animations
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const fadeInOptions = {
+                threshold: 0.2,
+                rootMargin: "0px 0px -100px 0px"
+            };
+            
+            const fadeInObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, fadeInOptions);
+            
+            fadeElements.forEach(element => {
+                fadeInObserver.observe(element);
+            });
+            
+            // Navbar background on scroll
+            const navbar = document.querySelector('nav');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('bg-slate-950');
+                    navbar.classList.remove('bg-opacity-80');
+                } else {
+                    navbar.classList.remove('bg-slate-950');
+                    navbar.classList.add('bg-opacity-80');
+                }
+            });
+            
+            // Smooth scrolling for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                    // Close menu when an item is clicked (optional)
-                    if (mobileMenu.classList.contains('open')) {
-                        mobileMenu.classList.remove('open');
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
                     }
                 });
             });
+            
+            // Form submission handling
+            const contactForm = document.querySelector('form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    // Here you would typically send the form data to a server
+                    // For now, we'll just show an alert
+                    alert('Thank you for your message! I will get back to you soon.');
+                    contactForm.reset();
+                });
+            }
         });
     </script>
- 
 </body>
 </html>
